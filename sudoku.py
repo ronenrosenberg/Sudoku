@@ -1,7 +1,7 @@
 """The Sudoku solver.
 """
 
-__author__ = 'PUT THE FIRST NAME HERE, PUT THE SECOND NAME HERE'
+__author__ = 'Ronen Rosenberg, Suri Castro'
 
 class Square:
     """A `Square` consists of 4 attributes.
