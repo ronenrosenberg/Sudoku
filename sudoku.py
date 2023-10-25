@@ -20,7 +20,11 @@ class Square:
     Note: don't edit this class definition.
 
     """
-    pass
+    def __init__(self, value, row, column, block):
+        self.value = value
+        self.row = row
+        self.column = column
+        self.block = block
 
 def main():
 
@@ -29,6 +33,7 @@ def main():
     with open('sudoku1.txt') as file:
         puzzle = file.read()
     grid = create_squares(puzzle)
+    print(puzzle)
     solve(grid)
     print(to_string(grid))
 
@@ -36,8 +41,7 @@ def create_location(row, col):
 
     """Returns with the specified row and column as a pair."""
 
-    # TODO You have to write this
-    return None
+    return (row, col)
 
 def find_row(here):
 
@@ -46,8 +50,10 @@ def find_row(here):
 
     """
 
-    # TODO You have to write this
-    return None
+    array = [(here[0],i) for i in range(9)]
+    array.remove(here)
+    return array
+
 
 def find_column(here):
 
@@ -56,18 +62,21 @@ def find_column(here):
 
     """
 
-    # TODO You have to write this
-    return None
+    array = [(i,here[1]) for i in range(9)]
+    array.remove(here)
+    return array
 
 def find_block(here):
 
     """Returns an array of the eight locations (represented by pairs) in
     the same 3x3 block as here (represented by a pair).
-
     """
+    (x, y) = here
+    array = []
+    for i in range(x-1, x+2):
+        for j in range(y-1, x+2):
+            array.append(i,j)
 
-    # TODO You have to write this
-    return None
 
 def create_squares(diagram=None):
 
