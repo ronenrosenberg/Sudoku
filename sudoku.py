@@ -71,11 +71,15 @@ def find_block(here):
     """Returns an array of the eight locations (represented by pairs) in
     the same 3x3 block as here (represented by a pair).
     """
-    (x, y) = here
+    (x, y) = (here)
     array = []
-    for i in range(x-1, x+2):
-        for j in range(y-1, x+2):
-            array.append(i,j)
+    blockx, blocky = int(3*(x//3.0)), int(3*(y//3.0))
+    for i in range(blockx, blockx+3):
+        for j in range(blocky, blocky+3):
+            array.append((i,j))
+    array.remove(here)
+
+    return array
 
 
 def create_squares(diagram=None):
@@ -95,9 +99,25 @@ def create_squares(diagram=None):
     readability when printed.
 
     """
-
-    # TODO You have to write this
-    return None
+    #diagram = 
+    #array = [[Square(0, ) for i in range(9)] for j in range(9)]
+    #if diagram == None: return array
+    """
+    i = 0
+    j = 0
+    for val in range(len(diagram)):
+        if val != None:
+            array[i][j] = val
+        if i == 8:
+            i = 0
+            j += 1
+        i += 1
+    return array
+    """
+    for i in range(9):
+        for j in range(9):
+            pass
+    
 
 def to_string(grid):
 
