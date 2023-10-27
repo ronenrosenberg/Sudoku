@@ -49,9 +49,11 @@ def find_row(here):
     the same row as here (represented by a pair).
 
     """
-
+    #generate list of all locations in row
     array = [(here[0],i) for i in range(9)]
+    #remove location of "here"
     array.remove(here)
+
     return array
 
 
@@ -73,7 +75,7 @@ def find_block(here):
     """Returns an array of the eight locations (represented by pairs) in
     the same 3x3 block as here (represented by a pair).
     """
-    
+
     array = []
     #extract x and y
     (x, y) = (here)
@@ -108,22 +110,10 @@ def create_squares(diagram=None):
 
     """
     #removes newline shit
-    diagram = diagram.strip()
+    diagram = diagram.replace("\n", "")
     #generates array where all val are 0
-    array = [[Square(0, find_row((i, j)), find_column((i, j)), find_block((i, j))) for i in range(9)] for j in range(9)]
-    if diagram == None: return array
-    """
-    i = 0
-    j = 0
-    for val in range(len(diagram)):
-        if val != None:
-            array[i][j] = val
-        if i == 8:
-            i = 0
-            j += 1
-        i += 1
-    return array
-    """
+    array = [[Square(0, 0, 0, 0) for i in range(9)] for j in range(9)]
+    
     for i in range(9):
         for j in range(9):
             pass
@@ -169,3 +159,5 @@ def solve(grid):
     return True
 
 if __name__ == '__main__': main()
+
+
