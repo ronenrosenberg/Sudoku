@@ -61,9 +61,11 @@ def find_column(here):
     the same column as here (represented by a pair).
 
     """
-
+    #generate list of all locations in column
     array = [(i,here[1]) for i in range(9)]
+    #remove location of "here"
     array.remove(here)
+
     return array
 
 def find_block(here):
@@ -71,12 +73,18 @@ def find_block(here):
     """Returns an array of the eight locations (represented by pairs) in
     the same 3x3 block as here (represented by a pair).
     """
-    (x, y) = (here)
+    
     array = []
+    #extract x and y
+    (x, y) = (here)
+    #do math to find the location of the upper left square of whatever block we're in
     blockx, blocky = int(3*(x//3.0)), int(3*(y//3.0))
+    #generate an array that contains all of the locations in the block
     for i in range(blockx, blockx+3):
         for j in range(blocky, blocky+3):
             array.append((i,j))
+
+    #remove the location of "here"
     array.remove(here)
 
     return array
@@ -99,9 +107,11 @@ def create_squares(diagram=None):
     readability when printed.
 
     """
-    #diagram = 
-    #array = [[Square(0, ) for i in range(9)] for j in range(9)]
-    #if diagram == None: return array
+    #removes newline shit
+    diagram = diagram.strip()
+    #generates array where all val are 0
+    array = [[Square(0, find_row((i, j)), find_column((i, j)), find_block((i, j))) for i in range(9)] for j in range(9)]
+    if diagram == None: return array
     """
     i = 0
     j = 0
