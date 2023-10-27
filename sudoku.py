@@ -113,10 +113,27 @@ def create_squares(diagram=None):
     diagram = diagram.replace("\n", "")
     #generates array where all val are 0
     array = [[Square(0, 0, 0, 0) for i in range(9)] for j in range(9)]
-    
     for i in range(9):
         for j in range(9):
-            pass
+            temp = []
+            for location in find_row((i, j)):
+                temp.append(array[location[0], location[1]])
+            array[i][j].row = temp
+
+            temp = []
+            for location in find_column((i, j)):
+                temp.append(array[location[0], location[1]])
+            array[i][j].column = temp
+            
+            temp = []
+            for location in find_block((i, j)):
+                temp.append(array[location[0], location[1]])
+            array[i][j].block = temp
+
+
+    for i in range(1, 10):
+        for j in range(1, 10):
+            array[i-1][j-1] = Square(diagram[i*j + j - 1], 0, 0, 0)
     
 
 def to_string(grid):
