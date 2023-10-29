@@ -20,11 +20,12 @@ class Square:
     Note: don't edit this class definition.
 
     """
-    def __init__(self, value, row, column, block):
+
+    '''def __init__(self, value, row, column, block):
         self.value = value
         self.row = row
         self.column = column
-        self.block = block
+        self.block = block'''
 
 def main():
 
@@ -49,13 +50,10 @@ def find_row(here):
     the same row as here (represented by a pair).
 
     """
-    #generate list of all locations in row
+
     array = [(here[0],i) for i in range(9)]
-    #remove location of "here"
     array.remove(here)
-
     return array
-
 
 def find_column(here):
 
@@ -75,7 +73,7 @@ def find_block(here):
     """Returns an array of the eight locations (represented by pairs) in
     the same 3x3 block as here (represented by a pair).
     """
-
+    
     array = []
     #extract x and y
     (x, y) = (here)
@@ -90,7 +88,6 @@ def find_block(here):
     array.remove(here)
 
     return array
-
 
 def create_squares(diagram=None):
 
@@ -109,32 +106,46 @@ def create_squares(diagram=None):
     readability when printed.
 
     """
-    #removes newline shit
-    diagram = diagram.replace("\n", "")
-    #generates array where all val are 0
-    array = [[Square(0, 0, 0, 0) for i in range(9)] for j in range(9)]
+
+    #generates array where all val are None lmao
+    array = [[None for col in range(9)] for row in range(9)]
     for i in range(9):
         for j in range(9):
-            temp = []
-            for location in find_row((i, j)):
-                temp.append(array[location[0], location[1]])
-            array[i][j].row = temp
+            array[i][j] = Square()
+            array[i][j].value = 0
+            array[i][j].row = [0 for x in range(8)]
+            array[i][j].column = [0 for x in range(8)]
+            array[i][j].block = [0 for x in range(8)]
 
-            temp = []
-            for location in find_column((i, j)):
-                temp.append(array[location[0], location[1]])
-            array[i][j].column = temp
-            
-            temp = []
-            for location in find_block((i, j)):
-                temp.append(array[location[0], location[1]])
-            array[i][j].block = temp
-
-
-    for i in range(1, 10):
-        for j in range(1, 10):
-            array[i-1][j-1] = Square(diagram[i*j + j - 1], 0, 0, 0)
+    #remove newline shit
+    if diagram != None:
+        for i in range(len(diagram)):
+            if diagram[i] == '.':
+                diagram = diagram[0:i] + '0' + diagram[i+1:len(diagram)]
+        for i in range(len(diagram)-1):
+            if diagram[i] == '\n':
+                diagram = diagram[0:i] + diagram[i+2:len(diagram)]
     
+    for i in range(9):
+        for j in range(9):
+            #we make these so the code is neater
+            tempcol = find_column(create_location(i,j))
+            temprow = find_row(create_location(i,j))
+            tempblock = find_block(create_location(i,j))
+
+            for k in range(8): #and this lets the code read the .row[x] stuff
+                array[i][j].column[k] = array[tempcol[k][0]][tempcol[k][1]]
+                array[i][j].row[k] = array[temprow[k][0]][temprow[k][1]]
+                array[i][j].block[k] = array[tempblock[k][0]][tempblock[k][1]]
+
+    if diagram != None:
+        counter = -1
+        for i in range(9):
+            for j in range(9):
+                counter += 1
+                array[i][j].value = ord(diagram[counter]) - ord('0') # so the value is an int
+    
+    return array
 
 def to_string(grid):
 
@@ -144,7 +155,18 @@ def to_string(grid):
     """
 
     # TODO You have to write this
-    return None
+
+    mystr = ''
+    for i in range(9):
+        for j in range(9):
+            if grid[i][j].value == 0:
+                mystr += '.'
+            else:
+                temp = str(grid[i][j].value)
+                mystr += temp
+        mystr += '\n'
+
+    return mystr
 
 def find_valid_numbers(square):
 
@@ -176,5 +198,3 @@ def solve(grid):
     return True
 
 if __name__ == '__main__': main()
-
-
