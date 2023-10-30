@@ -174,9 +174,24 @@ def find_valid_numbers(square):
     appear elsewhere in the Square's row, column, or block.
 
     """
+    array = [False]
 
-    # TODO You have to write this
-    return None
+    for i in range(1, 10):
+        bool = True
+        for surrounding_squares in square.row:
+            if surrounding_squares.value == i:
+                bool = False
+        for surrounding_squares in square.column:
+            if surrounding_squares.value == i:
+                bool = False
+        for surrounding_squares in square.block:
+            if surrounding_squares.value == i:
+                bool = False
+        array.append(bool)
+
+    return array
+
+
 
 def solve(grid):
 
@@ -194,6 +209,21 @@ def solve(grid):
     #                 return True
     #         nothing worked: set value back to 0 and return false
     # no squares left to fill in: return true
-    return True
+    
+    #for each square
+    for i in range(9):
+        for j in range(9):
+            #if it's value is 0
+            if grid[i][j].value == 0:
+                    #for each valid num
+                    for k in find_valid_numbers(grid[i][j].value):
+                        grid[i][j].value = k
+                        if solve(grid) == True:
+                            return True
+                        grid[i][j] = 0
+                        return False
+
+
+                
 
 if __name__ == '__main__': main()
