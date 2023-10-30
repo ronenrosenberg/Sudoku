@@ -213,15 +213,36 @@ def solve(grid):
     #for each square
     for i in range(9):
         for j in range(9):
-            #if it's value is 0
+            #if its value is 0
             if grid[i][j].value == 0:
-                    #for each valid num
-                    for k in find_valid_numbers(grid[i][j].value):
+                    
+                    #get valid nums
+                    valid_nums = []
+                    for i in range(8):
+                        if find_valid_numbers(grid[i][j])[i] != 0:
+                            valid_nums.append(i)
+                            
+                    #for each valid num   
+                    for k in valid_nums:
                         grid[i][j].value = k
-                        if solve(grid) == True:
-                            return True
-                        grid[i][j] = 0
-                        return False
+
+                        
+                        is_zero = False
+                        for i in range(9):
+                            for j in range(9):
+                                if grid[i][j].value == 0:
+                                    is_zero = True
+                        if is_zero:
+                            return solve(grid)
+                        #base case
+                        else:
+                            return True 
+                    #base case
+                    return False
+                        
+
+
+                        
 
 
                 
