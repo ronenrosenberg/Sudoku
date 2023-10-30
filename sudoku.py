@@ -218,9 +218,10 @@ def solve(grid):
                     
                     #get valid nums
                     valid_nums = []
-                    for i in range(8):
-                        if find_valid_numbers(grid[i][j])[i] != 0:
-                            valid_nums.append(i)
+                    for k in range(10):
+                        if find_valid_numbers(grid[i][j])[k] != 0:
+                            valid_nums.append(k)
+                            
                             
                     #for each valid num   
                     for k in valid_nums:
@@ -232,12 +233,14 @@ def solve(grid):
                             for j in range(9):
                                 if grid[i][j].value == 0:
                                     is_zero = True
+                        
+                        #if there is a zero, recurse
                         if is_zero:
                             return solve(grid)
-                        #base case
+                        #base case - for if there's no zeros left
                         else:
                             return True 
-                    #base case
+                    #base case - for if run out of ever run out of valid nums
                     return False
                         
 
