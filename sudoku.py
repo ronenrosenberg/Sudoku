@@ -121,13 +121,9 @@ def create_squares(diagram=None):
 
     #remove newline shit
     if diagram != None:
-        for i in range(len(diagram) - 1):
-            if diagram[i] == '.':
-                diagram = diagram[i-1] + '0' + diagram[i+1:len(diagram)]
-        for i in range(len(diagram) - 2):
-            if diagram[i:i+2] == '\n':
-                diagram = diagram[i-1] + diagram[i+2:len(diagram)]
-    
+        diagram = diagram.replace("\n","")
+        diagram = diagram.replace(".","0")
+        
     for i in range(9):
         for j in range(9):
             #we make these so the code is neater - lists of locations of pertinent surround squares
@@ -140,14 +136,19 @@ def create_squares(diagram=None):
                 array[i][j].column[k] = array[tempcol[k][0]][tempcol[k][1]]
                 array[i][j].row[k] = array[temprow[k][0]][temprow[k][1]]
                 array[i][j].block[k] = array[tempblock[k][0]][tempblock[k][1]]
+    
 
     if diagram != None:
         diagram_index = 0
         for i in range(9):
             for j in range(9):
-                array[i][j].value = ord(diagram[diagram_index])# so the value is an int
+                array[i][j].value = int(diagram[diagram_index])# so the value is an int
                 diagram_index += 1
     
+    for things in array:
+        for thingies in things:
+            print(thingies.value)
+
     return array
 
 def to_string(grid):
