@@ -137,7 +137,8 @@ def create_squares(diagram=None):
                 array[i][j].row[k] = array[temprow[k][0]][temprow[k][1]]
                 array[i][j].block[k] = array[tempblock[k][0]][tempblock[k][1]]
     
-
+    
+    #add values to array
     if diagram != None:
         diagram_index = 0
         for i in range(9):
@@ -174,8 +175,9 @@ def find_valid_numbers(square):
     appear elsewhere in the Square's row, column, or block.
 
     """
-    array = [False]
+    array = [False] #skip 0, always false
 
+    #fills array with each appropriate boolean for each digit
     for i in range(1, 10):
         bool = True
         for surrounding_squares in square.row:
@@ -230,7 +232,7 @@ def solve(grid):
                         return True
                 
                 #nothing worked: set value back to 0 and return false
-                grid[i][j] = 0
+                grid[i][j].value = 0
                 return False
     
     #if no squares left to fill in, return True     
@@ -240,14 +242,6 @@ def solve(grid):
             if grid[i][j].value == 0:
                 is_zero = True
     if not is_zero:
-        return True
-            
-                        
-
-
-                        
-
-
-                
+        return True                
 
 if __name__ == '__main__': main()
