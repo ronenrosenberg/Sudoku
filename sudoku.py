@@ -109,41 +109,44 @@ def create_squares(diagram=None):
 
     #generates array where all val are None lmao
     array = [[None for col in range(9)] for row in range(9)]
+    
+    #generates a structure for data to fit into
     for i in range(9):
         for j in range(9):
             array[i][j] = Square()
             array[i][j].value = 0
-            array[i][j].row = [0 for x in range(8)]
-            array[i][j].column = [0 for x in range(8)]
-            array[i][j].block = [0 for x in range(8)]
+            array[i][j].row = [0 for i in range(8)]
+            array[i][j].column = [0 for i in range(8)]
+            array[i][j].block = [0 for i in range(8)]
 
     #remove newline shit
     if diagram != None:
-        for i in range(len(diagram)):
+        for i in range(len(diagram) - 1):
             if diagram[i] == '.':
-                diagram = diagram[0:i] + '0' + diagram[i+1:len(diagram)]
-        for i in range(len(diagram)-1):
-            if diagram[i] == '\n':
-                diagram = diagram[0:i] + diagram[i+2:len(diagram)]
+                diagram = diagram[i-1] + '0' + diagram[i+1:len(diagram)]
+        for i in range(len(diagram) - 2):
+            if diagram[i:i+2] == '\n':
+                diagram = diagram[i-1] + diagram[i+2:len(diagram)]
     
     for i in range(9):
         for j in range(9):
-            #we make these so the code is neater
-            tempcol = find_column(create_location(i,j))
-            temprow = find_row(create_location(i,j))
-            tempblock = find_block(create_location(i,j))
+            #we make these so the code is neater - lists of locations of pertinent surround squares
+            tempcol = find_column((i,j))
+            temprow = find_row((i,j))
+            tempblock = find_block((i,j))
 
             for k in range(8): #and this lets the code read the .row[x] stuff
+                #initialize 
                 array[i][j].column[k] = array[tempcol[k][0]][tempcol[k][1]]
                 array[i][j].row[k] = array[temprow[k][0]][temprow[k][1]]
                 array[i][j].block[k] = array[tempblock[k][0]][tempblock[k][1]]
 
     if diagram != None:
-        counter = -1
+        diagram_index = 0
         for i in range(9):
             for j in range(9):
-                counter += 1
-                array[i][j].value = ord(diagram[counter]) - ord('0') # so the value is an int
+                array[i][j].value = ord(diagram[diagram_index])# so the value is an int
+                diagram_index += 1
     
     return array
 
@@ -156,17 +159,16 @@ def to_string(grid):
 
     # TODO You have to write this
 
-    mystr = ''
+    str_grid = ''
     for i in range(9):
         for j in range(9):
             if grid[i][j].value == 0:
-                mystr += '.'
+                str_grid += '.'
             else:
-                temp = str(grid[i][j].value)
-                mystr += temp
-        mystr += '\n'
+                str_grid += str(grid[i][j].value)
+        str_grid += '\n'
 
-    return mystr
+    return str_grid
 
 def find_valid_numbers(square):
 
