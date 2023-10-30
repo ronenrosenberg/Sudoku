@@ -144,10 +144,6 @@ def create_squares(diagram=None):
             for j in range(9):
                 array[i][j].value = int(diagram[diagram_index])# so the value is an int
                 diagram_index += 1
-    
-    for things in array:
-        for thingies in things:
-            print(thingies.value)
 
     return array
 
