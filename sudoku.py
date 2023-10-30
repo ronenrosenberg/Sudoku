@@ -215,33 +215,33 @@ def solve(grid):
         for j in range(9):
             #if its value is 0
             if grid[i][j].value == 0:
-                    
-                    #get valid nums
-                    valid_nums = []
-                    for k in range(10):
-                        if find_valid_numbers(grid[i][j])[k] != 0:
-                            valid_nums.append(k)
-                            
-                            
-                    #for each valid num   
-                    for k in valid_nums:
-                        grid[i][j].value = k
-
+                
+                #get valid nums
+                valid_nums = []
+                for k in range(10):
+                    if find_valid_numbers(grid[i][j])[k] != 0:
+                        valid_nums.append(k)
                         
-                        is_zero = False
-                        for i in range(9):
-                            for j in range(9):
-                                if grid[i][j].value == 0:
-                                    is_zero = True
-                        
-                        #if there is a zero, recurse
-                        if is_zero:
-                            return solve(grid)
-                        #base case - for if there's no zeros left
-                        else:
-                            return True 
-                    #base case - for if run out of ever run out of valid nums
-                    return False
+                #for each valid number that can be filled in 
+                for k in valid_nums:
+                    grid[i][j].value = k
+                    #if you can solve the rest of the grid
+                    if solve(grid):
+                        return True
+                
+                #nothing worked: set value back to 0 and return false
+                grid[i][j] = 0
+                return False
+    
+    #if no squares left to fill in, return True     
+    is_zero = False
+    for i in range(9):
+        for j in range(9):
+            if grid[i][j].value == 0:
+                is_zero = True
+    if not is_zero:
+        return True
+            
                         
 
 
