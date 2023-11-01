@@ -236,12 +236,6 @@ def solve(grid):
                 return False
     
     #if no squares left to fill in, return True     
-    is_zero = False
-    for i in range(9):
-        for j in range(9):
-            if grid[i][j].value == 0:
-                is_zero = True
-    if not is_zero:
-        return True                
+    return True             
 
 if __name__ == '__main__': main()
