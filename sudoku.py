@@ -236,6 +236,6 @@ def solve(grid):
                 return False
     
     #if no squares left to fill in, return True     
-    return True             
+    return True
 
 if __name__ == '__main__': main()
